@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC" rel="stylesheet">
+    <title>Hearthstone</title>
+    <style>
+      body{
+        font-family: 'Alegreya Sans SC', sans-serif;
+        background-color: rgb(72, 22, 20);
+      }
+
+      .heading{
+        color: rgb(236, 210, 163);
+      }
+
+      input {
+        background-color: rgb(236, 210, 163);
+        font-family:'Alegreya Sans SC', sans-serif;
+        font-size: 20px;
+      }
+      hr{
+        border: 0;
+        height: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+
+      .grid-container{
+        display: inline-grid;
+        grid-template-columns: auto auto auto;
+        padding: 10px;
+        grid-column-gap: 25px;
+        grid-row-gap: 25px;
+      }
+
+      .grid-item {
+        border: 1px solid black;
+        border-radius: 10px;
+        padding: 20px;
+        font-size: 25px;
+        text-align: center;
+        background-color: rgb(236, 210, 163);
+      }
+
+      .add-to-current-cards-link, .remove-from-current-cards-link{
+        text-decoration: none;
+        color: black;
+      }
+
+      .add-to-current-cards-link:hover{
+        color: #845faf;
+      }
+
+      .remove-from-current-cards-link:hover{
+        color: #cc1c1c;
+      }
+
+      .add-to-current-font-size, .remove-from-current-font-size{
+        font-size: 20px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h2 class="heading">Add a new card to your deck</h2>
+    <form action="/cards" method="post">
+    <input type="number" name="mana" placeholder="Mana">
+    <input type="number" name="attack" placeholder="Attack">
+    <input type="number" name="health" placeholder="Health">
+    <input type="text" name="description" placeholder="Name/Description">
+    <input type="Submit">
+    </form>
+
+    <hr>
+
+    <h3 class="heading">All cards</h3>
+    <div class="grid-container">
+      <% for (var i=0; i < cards.length; i++) { %>
+        <div class="grid-item">
+          <p><%= cards[i].description %></p>
+          <p>Mana: <%= cards[i].mana %></p>
+          <p>Attack: <%= cards[i].attack %></p>
+          <p>Health: <%= cards[i].health %></p>
+          <p class="add-to-current-font-size"><a class="add-to-current-cards-link" href="/cards/<%= cards[i].id %>">Add to current cards</a></p>
+        </div>
+      <% } %>
+    </div>
+
+    <hr>
+
+    <h3 class="heading">Current cards</h3>
+    <div class="grid-container">
+        <% for (var i=0; i < deck.length; i++) { %>
+        <div class="grid-item">
+          <p><%= deck[i].description %></p>
+          <p>Mana: <%= deck[i].mana %></p>
+          <p>Attack: <%= deck[i].attack %></p>
+          <p>Health: <%= deck[i].health %></p>
+          <p class="remove-from-current-font-size"><a class="remove-from-current-cards-link" href="/cards/del/<%= deck[i].id %>">Remove from current cards</a></p>
+        </div>
+      <% } %>
+    </div>
+  </body>
+</html>
